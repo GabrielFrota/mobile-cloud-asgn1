@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.2'
+    id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -16,11 +16,10 @@ repositories {
 }
 
 dependencies {
-
     implementation("org.apache.httpcomponents:httpclient:4.5.6")
     implementation("com.google.guava:guava:17.0")
     implementation("org.apache.commons:commons-lang3:3.3.2")
-    implementation("com.squareup.retrofit:retrofit:1.6.0")
+    implementation("com.squareup.retrofit:retrofit:1.9.0")
     implementation("commons-io:commons-io:2.4")
 
     implementation("com.github.davidmarquis:fluent-interface-proxy:1.3.0")
@@ -34,7 +33,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'junit:junit:4.12'
+    runtimeOnly 'junit:junit:4.13.2'
 }
 
 test {

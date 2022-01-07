@@ -46,7 +46,6 @@ package org.magnum.dataup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import io.magnum.autograder.junit.Rubric;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,6 +62,7 @@ import org.magnum.dataup.model.Video;
 import org.magnum.dataup.model.VideoStatus;
 import org.magnum.dataup.model.VideoStatus.VideoState;
 
+import io.magnum.autograder.junit.Rubric;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -171,7 +171,6 @@ public class AutoGradingTest {
 			)
 	@Test
 	public void testGetNonExistantVideosData() throws Exception {
-		
 		long nonExistantId = getInvalidVideoId();
 		
 		try{

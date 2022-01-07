@@ -25,8 +25,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicLong;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.magnum.dataup.model.Video;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * This class provides a simple implementation to store video binary
@@ -107,10 +114,40 @@ public class VideoFileManager {
 	 * @throws IOException
 	 */
 	public void saveVideoData(Video v, InputStream videoData) throws IOException{
-		assert(videoData != null);
-		
 		Path target = getVideoPath(v);
 		Files.copy(videoData, target, StandardCopyOption.REPLACE_EXISTING);
+	}
+	
+  private String getUrlBaseForLocalServer() {
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    String base = "http://" + request.getServerName()
+        + ((request.getServerPort() != 80) ? ":" + request.getServerPort() : "");
+    return base;
+  }
+	
+  private String getDataUrl(long videoId) {
+    String url = getUrlBaseForLocalServer() + "/video/" + videoId + "/data";
+    return url;
+  }
+
+	private static final AtomicLong ids = new AtomicLong(0L);
+	private static final HashMap<Long, Video> videos = new HashMap<>();
+	
+	public Video getVideo(long id) {
+	  return videos.get(id);
+	}
+	
+	public Collection<Video> getAllVideos() {
+	  return videos.values();
+	}
+	
+	public Video addVideo(Video v) {
+    if (v.getId() == 0) {
+      v.setId(ids.incrementAndGet());    
+    }
+    v.setDataUrl(getDataUrl(v.getId()));
+    videos.put(v.getId(), v);
+    return v;
 	}
 	
 }
