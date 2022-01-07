@@ -130,24 +130,24 @@ public class VideoFileManager {
     return url;
   }
 
-	private static final AtomicLong ids = new AtomicLong(0L);
-	private static final HashMap<Long, Video> videos = new HashMap<>();
+  private static final AtomicLong ids = new AtomicLong(0L);
+  private static final HashMap<Long, Video> videos = new HashMap<>();
 	
-	public Video getVideo(long id) {
-	  return videos.get(id);
-	}
+  public Video getVideo(long id) {
+    return videos.get(id);
+  }
 	
-	public Collection<Video> getAllVideos() {
-	  return videos.values();
-	}
+  public Collection<Video> getAllVideos() {
+    return videos.values();
+  }
 	
-	public Video addVideo(Video v) {
+  public Video addVideo(Video v) {
     if (v.getId() == 0) {
       v.setId(ids.incrementAndGet());    
     }
     v.setDataUrl(getDataUrl(v.getId()));
     videos.put(v.getId(), v);
     return v;
-	}
+  }
 	
 }
